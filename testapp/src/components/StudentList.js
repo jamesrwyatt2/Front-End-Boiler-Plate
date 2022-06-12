@@ -12,32 +12,42 @@ export default class StudentList extends React.Component {
       }
     // when compoent is loaded, make calls
       componentDidMount() {
-          this.getStudents()
+        
+        const sendToken =  "Bearer " + JSON.parse(this.props.token);
+        fetch(`http://localhost:8080/users/current`,{
+          method: 'GET',
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': sendToken
+          },
+          })
+          .then(res =>  res.json())
+          .then(data => 
+            this.setState({ students :data })
+          )
+            console.log(this.state.students)
+
       }
       
-      getStudents = () =>{
-        axios.get(`http://localhost:8080/students`)
-          .then(res => {
-            console.log(res);
-            const students = res.data;
-            this.setState({ students });
-          })
+      getStudents = async () =>{
+        console.log("getting Token for currentUser: " + this.props.token)
+        const sendToken =  "Bearer " + JSON.parse(this.props.token);
+
+        const userData = await makeGetUserCall(sendToken);
+        console.log(userData)
+
+        this.setState({ students : userData });
+
       }
     
       render() {
         return (
             <>
+            <h1>User Management </h1>
         <StudentAdd getStudents={this.getStudents} />
+            {console.log(this.state.students)}
           <ul>
-            {
-              this.state.students
-                .map(student =>
-                <>
-                  <li key={student.id}>{student.name} | {student.email} | <StudentDelete getStudents={this.getStudents} id={student.id} /> </li>
-                  
-                </>
-                )
-            }
+          <li key={this.state.students.id}> {this.state.students.fullName} | {this.state.students.username} | <StudentDelete getStudents={this.getStudents} id={this.state.students.id} /> </li>
           </ul>
           </>
         )
