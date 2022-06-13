@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import StudentAdd from './StudentAdd';
 import StudentDelete from './StudentDelete';
+import { useNavigate } from "react-router-dom";
 
 async function loginUser(credentials) {
     // const temptoken = 123456;
@@ -23,39 +24,39 @@ export default class Login extends React.Component {
             username: '',
             password: ''
         }
+    };
+    
+    handleSubmit = async e => {
+        e.preventDefault();
+        const nav = useNavigate();
+        const token = await loginUser({
+            username: this.state.username,
+            password: this.state.password
+        });
+        console.log("Setting token: " + token)
+        this.props.setToken(token);
+        console.log("Navigating to: /home ")
+    }
 
-        };
-    
-        handleSubmit = async e => {
-            e.preventDefault();
-            const token = await loginUser({
-                username: this.state.username,
-                password: this.state.password
-            });
-            console.log("Setting token: " + token)
-            this.props.setToken(token);
-        }
-        render(){
-        return(
-            <div className="login-wrapper">
-    
-            <h1>Please Login</h1>
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    <p>Username</p>
-                    <input type="text" value={this.username} onChange={e => this.setState({username : e.target.value})} />
-                </label>
-                <label>
-                    <p>Password</p>
-                    <input type="password" value={this.password} onChange={e => this.setState({password: e.target.value})} />
-                </label>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+    render(){
+    return(
+        <div className="login-wrapper">
+
+        <h1>Please Login</h1>
+        <form onSubmit={this.handleSubmit}>
+            <label>
+                <p>Username</p>
+                <input type="text" value={this.username} onChange={e => this.setState({username : e.target.value})} />
+            </label>
+            <label>
+                <p>Password</p>
+                <input type="password" value={this.password} onChange={e => this.setState({password: e.target.value})} />
+            </label>
+            <div>
+                <button type="submit">Submit</button>
             </div>
-        )}
-
-
+        </form>
+        </div>
+    )}
 }
 
