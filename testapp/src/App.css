@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 .login-wrapper {
   display: flex;
@@ -10,4 +12,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.navbar-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.navbar-list {
+  list-style: none;
+  display: inline-flex;
+  padding-left: auto;
+
+}
+#header{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+li {
+  padding-left: 1em;
 }

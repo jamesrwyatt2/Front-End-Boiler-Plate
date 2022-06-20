@@ -4,11 +4,14 @@ import StudentList from './components/StudentList';
 import useToken from './components/useToken';
 import Login from './components/Login';
 import Reg from './components/Reg';
+import Error from './components/Error';
+import LandingPage from './components/LandingPage';
 import {
   BrowserRouter,
   Routes,
   Route,
-	Link
+	Link,
+  Outlet,
 } from "react-router-dom";
 import './App.css';
 
@@ -22,36 +25,36 @@ function App() {
     return (
       <div className="App">
 
-			<WelcomeMessage />	
+	
 
       <BrowserRouter>
         <Routes>
 
-        <Route path="/" element={<WelcomeMessage />}> </Route>
-        <Route path="/login" element={<Login setToken={setToken} />} ></Route>
-        <Route path="/register" element={<Reg />}></Route>
-        <Route path="/protected" > </Route>
+        <Route path="/" element={ <NavBar />}>
+          <Route index element={<LandingPage />} /> 
+
+          <Route path="login" element={<Login setToken={setToken} />} />
+          <Route path="/register" element={<Reg setToken={setToken} />} />
+          <Route path="/error" element={<Error />}></Route>
+        </Route>
 
         </Routes>
       </BrowserRouter>
 
-      
       </div>
     ) }
-  
   return (
     <div className="App">
 
         <BrowserRouter>
         <Routes>
 
-        <Route element={<StudentList token={token} />}> </Route>
-        <Route path="/home" element={<WelcomeMessage />}></Route>
-        <Route path="/registry/add" ></Route>
+        
+        <Route path="/home" element={<NavBar />}></Route>
+        <Route path="/registry/add" element={<StudentList token={token} />}></Route>
         <Route path="/registry/edit" ></Route>
         <Route path="/registry/view" ></Route>
-        <Route path="/login" ></Route>
-        <Route path="/login" ></Route>
+
 
         </Routes>
         </BrowserRouter>
@@ -60,11 +63,28 @@ function App() {
   );
 }
 
-function WelcomeMessage  () {
+export const NavBar = () => {
   return(
-    <>
-  <h1>Welcome to my Test app!</h1>
-  </>
+    <div>
+    <nav className="navbar-wrapper">
+
+    <h1 id="header">Nav Bar!</h1>
+    <ul className='navbar-list'>
+        <li>
+	      <Link to="/"><p>Home</p></Link>
+        </li>
+        <li>
+	      <Link to="/login"><p>Login</p></Link>
+        </li>
+        <li>
+	      <Link to="/register"><p>Registration</p></Link>
+        </li>
+      </ul>
+
+    </nav>
+    <hr />
+    <Outlet />
+  </div>
   )
 };
 
