@@ -3,6 +3,10 @@ import axios from 'axios';
 import StudentAdd from './StudentAdd';
 import StudentDelete from './StudentDelete';
 
+function makeGetUserCall(){
+  
+}
+
 export default class StudentList extends React.Component {
     constructor(props) {
         super(props);
@@ -10,6 +14,9 @@ export default class StudentList extends React.Component {
           students:[]
         };
       }
+
+
+
     // when compoent is loaded, make calls
       componentDidMount() {
         

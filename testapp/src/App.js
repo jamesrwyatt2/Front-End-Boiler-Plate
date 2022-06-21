@@ -12,8 +12,12 @@ import {
   Route,
 	Link,
   Outlet,
+  Router,
+  useNavigate,
 } from "react-router-dom";
 import './App.css';
+import Login2 from './components/Login2';
+import Reg2 from './components/Reg2';
 
 
 
@@ -21,20 +25,20 @@ import './App.css';
 function App() {
   const {token, setToken} = useToken();
 
+
+  console.log("Checking Token for routing, token: " + token)
+
   if(!token){
     return (
       <div className="App">
-
-	
-
       <BrowserRouter>
         <Routes>
 
         <Route path="/" element={ <NavBar />}>
           <Route index element={<LandingPage />} /> 
 
-          <Route path="login" element={<Login setToken={setToken} />} />
-          <Route path="/register" element={<Reg setToken={setToken} />} />
+          <Route path="login" element={<Login2 setToken={setToken} />} />
+          <Route path="/register" element={<Reg2 setToken={setToken} />} />
           <Route path="/error" element={<Error />}></Route>
         </Route>
 
@@ -49,7 +53,8 @@ function App() {
         <BrowserRouter>
         <Routes>
 
-        
+
+        <Route path="/login"> </Route>
         <Route path="/home" element={<NavBar />}></Route>
         <Route path="/registry/add" element={<StudentList token={token} />}></Route>
         <Route path="/registry/edit" ></Route>
@@ -87,5 +92,12 @@ export const NavBar = () => {
   </div>
   )
 };
+
+const RedirectAfterLogin =() => {
+  let nav = useNavigate();
+
+
+  return(<></>)
+}
 
 export default App;

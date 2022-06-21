@@ -1,21 +1,32 @@
 import React from "react";
-import axios from 'axios';
-import StudentAdd from './StudentAdd';
-import StudentDelete from './StudentDelete';
+import { LoginUser } from "./Callables/LoginUser";
+
 import { useNavigate } from "react-router-dom";
 
-async function loginUser(credentials) {
-    // const temptoken = 123456;
-    // return temptoken;
-    return fetch('http://localhost:8080/public/users/login', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
-}
+// async function loginUser(credentials, props) {
+
+
+//     // const temptoken = 123456;
+//     // return temptoken;
+//     const token = await fetch('http://localhost:8080/public/users/login', {
+//         method: 'POST',
+//         headers: {
+//         'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(credentials)
+//     })
+//         .then(data => data.json())
+//     console.log("Login call")
+//     console.log(token)    
+//     props.setToken(token)
+// }
+
+    function RedirectHome  () {
+        console.log("Redirect Called")
+        let nav = useNavigate();
+        nav("/home")
+
+    }
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -23,20 +34,24 @@ export default class Login extends React.Component {
         this.state = {
             username: '',
             password: ''
-        }
+        };
     };
+
     
+
+
     handleSubmit = async e => {
         e.preventDefault();
-        const nav = useNavigate();
-        const token = await loginUser({
-            username: this.state.username,
-            password: this.state.password
-        });
-        console.log("Setting token: " + token)
+        
+        console.log("Login Handler")
+        const token = await LoginUser({
+                username: this.state.username,
+                password: this.state.password
+            });
         this.props.setToken(token);
-        console.log("Navigating to: /home ")
+        RedirectHome()
     }
+
 
     render(){
     return(
@@ -57,6 +72,6 @@ export default class Login extends React.Component {
             </div>
         </form>
         </div>
-    )}
+    )};
 }
 

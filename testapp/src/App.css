@@ -31,3 +31,8 @@
 li {
   padding-left: 1em;
 }
+
+/* Login Page Error Test */
+.errorText {
+  color: red;
+}
